@@ -19,6 +19,23 @@ if (env === 'test') {
 //  creamos la instancia de la clase
 const hash = httpHash()
 
+//  creamos la ruta para obtener imagenes por tag
+hash.set('GET /tag/:tag', async function byTag (req, res, params) {
+  const tag = params.tag
+  await db.connect()
+  const images = await db.getImagesByTag(tag)
+  await db.disconnect()
+  send(res, 200, images)
+})
+
+//  crearemos la ruta de listar imagen antes de la ruta del id
+hash.set('GET /list', async function list (req, res, params) {
+  await db.connect()
+  const images = await db.getImages()
+  await db.disconnect()
+  send(res, 200, images)
+})
+
 //  esta línea nos permite determinar cuales son las rutas y qué es lo que vamos a recibir
 hash.set('GET /:id', async function getPicture (req, res, params) {
   //  primero vamos a obtener el id de los parámetros
@@ -40,6 +57,16 @@ hash.set('POST /', async function postPicture (req, res, params) {
   await db.disconnect()
   send(res, 201, created)
 })
+
+hash.set('POST /:id/like', async function likePicture (req, res, params) {
+  const id = params.id
+  await db.connect()
+  //  en este caso le hacemos like a la imagen
+  const image = await db.likeImage(id)
+  await db.disconnect()
+  send(res, 200, image)
+})
+
 //  micro, espera que se le exporte una función asíncrona
 export default async function main (req, res) {
   //  Acá se almaceraná toda la lógica de las peticiones que vamos a recibir
