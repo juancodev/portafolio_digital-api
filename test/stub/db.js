@@ -34,4 +34,12 @@ export default class Db {
   getImagesByTag (tag) {
     return Promise.resolve(fixtures.getImagesByTag())
   }
+
+  saveUser (user) {
+    return Promise.resolve(fixtures.getUser())
+  }
+
+  getUser (username) {
+    return Promise.resolve(fixtures.getUser())
+  }
 }

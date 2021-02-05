@@ -26,5 +26,16 @@ export default {
       this.getImage(),
       this.getImage()
     ]
+  },
+
+  getUser () {
+    return {
+      id: '0XRTGURPkIF2ZiNmm41JUT',
+      name: 'Juan Montilla',
+      username: 'jmontilla',
+      email: 'j@portfolio.test',
+      password: 'jmontilla123',
+      createdAt: new Date().toString()
+    }
   }
 }
