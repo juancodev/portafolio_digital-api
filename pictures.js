@@ -4,6 +4,7 @@ import { send, json } from 'micro'
 import httpHash from 'http-hash'
 import Db from 'portafolio_digital-db'
 import config from './config.js'
+import utils from './lib/utils.js'
 import DbStub from './test/stub/db.js'
 
 //  obtenemos el entorno de ejecución y si no se decide ningún tipo de variable será producción
@@ -50,8 +51,19 @@ hash.set('GET /:id', async function getPicture (req, res, params) {
   send(res, 200, image)
 })
 
-hash.set('POST /', async function postPicture (req, res, params) {
+hash.set('POST /', async function postPicture (req, res) {
   const image = await json(req)
+  //  antes de validar la conexión a la base de datos, necesitamos validar si recibe un token o no
+  try {
+    const token = await utils.extractToken(req)
+    const encoded = await utils.verifyToken(token, config.secret)
+    if (encoded && encoded.userId !== image.userId) {
+      throw new Error('invalid token')
+    }
+  } catch (e) {
+    return send(res, 401, { error: 'Token invalido' })
+  }
+
   await db.connect()
   const created = await db.saveImage(image)
   await db.disconnect()

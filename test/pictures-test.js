@@ -6,6 +6,8 @@ import listen from 'test-listen'
 import request from 'request-promise'
 import fixtures from './fixtures/index.js'
 import pictures from '../pictures.js'
+import utils from '../lib/utils.js'
+import config from '../config.js'
 
 //  para no estar creando cada vez la base de datos sino que siempre antes se cree y después se desconecte
 test.beforeEach(async t => {
@@ -20,10 +22,13 @@ test('GET /:id', async t => {
   t.deepEqual(body, image)
 })
 
-test('POST /', async t => {
+//  Prueba de token seguro
+test('secure POST /', async t => {
   //  creamos la variable que almacena los fixtures con el método getImage()
   const image = fixtures.getImage()
   const url = t.context.url
+  //  Generamos un token, utilizando la lib creada con utils.signToken(), pasando el payload (data) como el userId lo vamos a obtener de la imagen.userId y le pasamos el secret que será elaborado en un archivo aparte
+  const token = await utils.signToken({ userId: image.userId }, config.secret)
 
   const options = {
     method: 'POST',
@@ -34,10 +39,13 @@ test('POST /', async t => {
       src: image.src,
       userId: image.userId
     },
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
     resolveWithFullResponse: true
   }
 
-  //  luego vamos a ejecutar el request
+  //  creamos la respuesta primero
   const response = await request(options)
 
   t.is(response.statusCode, 201)
