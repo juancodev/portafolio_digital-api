@@ -2,10 +2,12 @@
   "name": "portafolio_digital-api",
   "version": "1.0.0",
   "description": "Portafolio Digital API REST",
-  "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "test": "npm run lint && NODE_ENV=test ava --require babel-register test/**-test.js"
+    "test": "npm run lint && NODE_ENV=test ava --require babel-register test/**-test.js",
+    "pictures": "micro -p 5000 pictures.js",
+    "users": "micro -p 5001 users.js",
+    "auth": "micro -p 5002 auth.js"
   },
   "type": "module",
   "standard": {
@@ -36,6 +38,7 @@
     "@babel/preset-env": "^7.12.13",
     "ava": "^3.15.0",
     "babel-eslint": "^10.1.0",
+    "babel-register": "^6.26.0",
     "standard": "^16.0.3",
     "test-listen": "^1.1.0"
   },

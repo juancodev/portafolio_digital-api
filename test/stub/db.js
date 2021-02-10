@@ -20,7 +20,7 @@ export default class Db {
     return Promise.resolve(fixtures.getImage())
   }
 
-  likeImage (id) {
+  likeImage (image) {
     const image = fixtures.getImage()
     image.liked = true
     image.likes = 1
