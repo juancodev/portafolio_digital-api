@@ -25,7 +25,6 @@ hash.set('POST /', async function saveUser (req, res, params) {
   await db.connect()
   //  almaceno el usuario
   const created = await db.saveUser(user)
-  await db.disconnect()
 
   //  garantizamos que le vamos a eliminar los campos email y password antes de enviarle la respuesta
   delete created.email
@@ -42,7 +41,6 @@ hash.set('GET /:username', async function getUser (req, res, params) {
   const user = await db.getUser(username)
   delete user.email
   delete user.password
-  await db.disconnect()
 
   send(res, 200, user)
 })

@@ -33,7 +33,7 @@ hash.set('POST /', async function authenticate (req, res, params) {
 
   //  creamos un nuevo token
   const token = await utils.signToken({
-    username: credentials.username
+    userId: credentials.username
   }, config.secret)
 
   //  enviamos la respuesta con un success
