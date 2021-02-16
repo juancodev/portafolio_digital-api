@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   db: {},
   secret: process.env.PORTAFOLIO_SECRET || 'p0rt4f0l10' //  no usar default
 }

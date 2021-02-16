@@ -1,9 +1,9 @@
 'use strict'
 
-import fixtures from '../fixtures/index.js'
+const fixtures = require('../fixtures/index.js')
 
 //  este modulo será una clase y con esto probaremos si las rutas funcionan o no, ya que la base de datos se probó en el módulo anterior
-export default class Db {
+module.exports = class Db {
   connect () {
     return Promise.resolve(true)
   }
@@ -20,7 +20,7 @@ export default class Db {
     return Promise.resolve(fixtures.getImage())
   }
 
-  likeImage (image) {
+  likeImage (id) {
     const image = fixtures.getImage()
     image.liked = true
     image.likes = 1

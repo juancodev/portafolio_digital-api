@@ -1,11 +1,11 @@
 'use strict'
 
-import { send, json } from 'micro'
-import httpHash from 'http-hash'
-import Db from 'portafolio_digital-db'
-import config from './config.js'
-import utils from './lib/utils.js'
-import DbStub from './test/stub/db.js'
+const { send, json } = require('micro')
+const httpHash = require('http-hash')
+const Db = require('portafolio_digital-db')
+const config = require('./config.js')
+const utils = require('./lib/utils.js')
+const DbStub = require('./test/stub/db.js')
 
 //  obtenemos el entorno de ejecución y si no se decide ningún tipo de variable será producción
 const env = process.env.NODE_ENV || 'production'
@@ -41,7 +41,7 @@ hash.set('POST /', async function authenticate (req, res, params) {
 })
 
 //  micro, espera que se le exporte una función asíncrona
-export default async function main (req, res) {
+module.exports = async function main (req, res) {
   //  Acá se almaceraná toda la lógica de las peticiones que vamos a recibir
   const { method, url } = req
   //  crearemos un match que es el que verifica si lo que le estamos pasando en el hash.set() tiene el mismo patrón

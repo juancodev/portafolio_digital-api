@@ -1,13 +1,13 @@
 'use strict'
 
-import test from 'ava'
-import micro from 'micro'
-import listen from 'test-listen'
-import request from 'request-promise'
-import fixtures from './fixtures/index.js'
-import auth from '../auth.js'
-import utils from '../lib/utils.js'
-import config from '../config.js'
+const test = require('ava')
+const micro = require('micro')
+const listen = require('test-listen')
+const request = require('request-promise')
+const fixtures = require('./fixtures/index.js')
+const auth = require('../auth.js')
+const utils = require('../lib/utils.js')
+const config = require('../config.js')
 
 //  para no estar creando cada vez la base de datos sino que siempre antes se cree y después se desconecte
 test.beforeEach(async t => {

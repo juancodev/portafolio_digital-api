@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   getImage () {
     return {
       id: '4VHRRq5sDwPdhsdDMx33Um',
