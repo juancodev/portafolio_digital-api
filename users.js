@@ -3,6 +3,7 @@
 const { send, json } = require('micro')
 const httpHash = require('http-hash')
 const Db = require('portafolio_digital-db')
+const gravatar = require('gravatar');
 const config = require('./config.js')
 const DbStub = require('./test/stub/db.js')
 
@@ -39,6 +40,11 @@ hash.set('GET /:username', async function getUser (req, res, params) {
   const username = params.username
   await db.connect()
   const user = await db.getUser(username)
+  user.avatar = gravatar.url(user.email)
+
+  const images = await db.getImagesByUser(username)
+  user.pictures = images
+
   delete user.email
   delete user.password
 
