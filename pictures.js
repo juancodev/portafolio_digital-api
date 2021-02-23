@@ -56,9 +56,9 @@ hash.set('POST /', async function postPicture (req, res) {
   //  antes de validar la conexión a la base de datos, necesitamos validar si recibe un token o no
   try {
     const token = await utils.extractToken(req)
-    const encoded = await utils.verifyToken(token, config.secret)
+    const encoded = await utils.verifyToken(token, config.secret, {})
     if (encoded && encoded.userId !== image.userId) {
-      throw new Error('invalid token')
+      return send(res, 401, { error: 'invalido token'})
     }
   } catch (e) {
     return send(res, 401, { error: 'Token invalido' })
